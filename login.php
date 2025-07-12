@@ -4,7 +4,8 @@ require_once 'includes/database.php';
 $base_url = '';
 
 if (isset($_SESSION['user_id'])) {
-    $redirect_path = $_SESSION['user_role'] == 'admin' ? "{$base_url}/admin/project/" : "{$base_url}/worker/project/tugas.php";
+    // Arahkan ke dasbor baru masing-masing peran
+    $redirect_path = $_SESSION['user_role'] == 'admin' ? "{$base_url}/admin/" : "{$base_url}/worker/";
     header('Location: ' . $redirect_path);
     exit;
 }
@@ -23,7 +24,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['user_name'] = $user['nama_lengkap'];
         $_SESSION['user_role'] = $user['role'];
 
-        $redirect_path = $user['role'] == 'admin' ? "{$base_url}/admin/project/" : "{$base_url}/worker/project/tugas.php";
+        // Arahkan ke dasbor baru masing-masing peran
+        $redirect_path = $user['role'] == 'admin' ? "{$base_url}/admin/" : "{$base_url}/worker/";
         header('Location: ' . $redirect_path);
         exit;
     } else {
