@@ -73,10 +73,9 @@ try {
         nama_tugas VARCHAR(100),
         status VARCHAR(20) DEFAULT 'Ditugaskan',
         deadline DATE,
-        FOREIGN KEY (project_id) REFERENCES projects(id),
-        FOREIGN KEY (user_id) REFERENCES users(id)
+        tgl_selesai DATE -- Kolom baru untuk tanggal penyelesaian
     )");
-    echo "<p>Tabel 'project_tasks' berhasil dibuat.</p>";
+    echo "<p>Tabel 'project_tasks' berhasil dibuat dengan kolom 'tgl_selesai'.</p>";
 
     // 6. Tabel Pengeluaran Proyek
     $db->exec("CREATE TABLE project_expenses (
@@ -112,14 +111,15 @@ try {
         ('Pembuatan Pagar Gudang B', 'Pembuatan pagar keliling untuk gudang B dengan material baja ringan', 15000000, 'Berjalan', '2025-07-15', '2025-08-15')
     ");
 
-    $db->exec("INSERT INTO project_tasks (project_id, user_id, nama_tugas, status, deadline) VALUES
-        (1, 2, 'Pengukuran Area Pagar', 'Selesai', '2025-07-18'),
-        (1, 3, 'Pemotongan Baja Ringan', 'Berjalan', '2025-07-25'),
-        (1, 2, 'Perakitan Rangka Pagar', 'Ditugaskan', '2025-08-05')
+    $db->exec("INSERT INTO project_tasks (project_id, user_id, nama_tugas, status, deadline, tgl_selesai) VALUES
+        (1, 2, 'Pengukuran Area Pagar', 'Selesai', '2025-07-18', '2025-07-17'),
+        (1, 3, 'Pemotongan Baja Ringan', 'Berjalan', '2025-07-25', NULL),
+        (1, 2, 'Perakitan Rangka Pagar', 'Ditugaskan', '2025-08-05', NULL)
     ");
     
     $db->exec("INSERT INTO inventory_transactions (item_id, user_id, tipe, jumlah) VALUES (3, 2, 'Pinjam', 5)");
 
+    // Ini adalah baris yang telah diperbaiki ($db-exec menjadi $db->exec)
     $db->exec("INSERT INTO project_expenses (project_id, deskripsi, jumlah, tanggal) VALUES
         (1, 'Pembelian Baja Ringan 50 batang', 4500000, '2025-07-16'),
         (1, 'Sewa Mesin Las Harian', 250000, '2025-07-20')
@@ -136,3 +136,4 @@ try {
 }
 
 echo "</div></div></body></html>";
+?>

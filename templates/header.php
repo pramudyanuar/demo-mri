@@ -25,6 +25,7 @@ $base_url = '';
                     <li class="nav-item"><a class="nav-link" href="<?= $base_url ?>/admin/project/">Manajemen Proyek</a></li>
                     <li class="nav-item"><a class="nav-link" href="<?= $base_url ?>/admin/inventory/">Manajemen Barang</a></li>
                     <li class="nav-item"><a class="nav-link" href="<?= $base_url ?>/admin/worker/">Manajemen Pekerja</a></li>
+                    <li class="nav-item"><a class="nav-link" href="<?= $base_url ?>/admin/worker/kinerja.php">Kinerja Pekerja</a></li>
                 <?php else: ?>
                     <li class="nav-item"><a class="nav-link" href="<?= $base_url ?>/worker/">Dasbor</a></li>
                     <li class="nav-item"><a class="nav-link" href="<?= $base_url ?>/worker/project/tugas.php">Tugas Saya</a></li>

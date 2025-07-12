@@ -3,20 +3,30 @@ require_once __DIR__ . '/../../templates/header.php';
 check_auth(['pekerja']);
 $user_id = $_SESSION['user_id'];
 
-// Handle action tandai selesai
+// Handle action
 if (isset($_GET['action']) && isset($_GET['task_id'])) {
     $task_id = $_GET['task_id'];
     $action = $_GET['action'];
     $new_status = '';
     
-    if ($action == 'start') $new_status = 'Berjalan';
-    if ($action == 'complete') $new_status = 'Selesai';
-
-    if ($new_status) {
-        // Pastikan task milik user yg login
+    if ($action == 'start') {
+        $new_status = 'Berjalan';
+        // Hanya update status
         $stmt = $db->prepare("UPDATE project_tasks SET status = ? WHERE id = ? AND user_id = ?");
         $stmt->execute([$new_status, $task_id, $user_id]);
-        header('Location: tugas.php?success=1'); exit;
+    }
+    
+    if ($action == 'complete') {
+        $new_status = 'Selesai';
+        $tgl_selesai = date('Y-m-d'); // Tanggal hari ini
+        // Update status dan tanggal selesai
+        $stmt = $db->prepare("UPDATE project_tasks SET status = ?, tgl_selesai = ? WHERE id = ? AND user_id = ?");
+        $stmt->execute([$new_status, $tgl_selesai, $task_id, $user_id]);
+    }
+
+    if ($new_status) {
+        header('Location: tugas.php?success=1'); 
+        exit;
     }
 }
 
